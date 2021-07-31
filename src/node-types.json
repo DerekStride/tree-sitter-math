@@ -12,11 +12,61 @@
           "named": true
         },
         {
+          "type": "sum",
+          "named": true
+        },
+        {
           "type": "variable",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": "sum",
+    "named": true,
+    "fields": {
+      "left": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "sum",
+            "named": true
+          },
+          {
+            "type": "variable",
+            "named": true
+          }
+        ]
+      },
+      "right": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "sum",
+            "named": true
+          },
+          {
+            "type": "variable",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "+",
+    "named": false
   },
   {
     "type": "number",

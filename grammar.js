@@ -6,6 +6,15 @@ module.exports = grammar({
     _expression: $ => choice(
       $.variable,
       $.number,
+      $.sum,
+    ),
+
+    sum: $ => prec.left(
+      seq(
+        field("left", $._expression),
+        "+",
+        field("right", $._expression),
+      ),
     ),
 
     number: _ => /\d+(\.\d+)?/,
