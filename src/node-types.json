@@ -28,6 +28,10 @@
             "named": true
           },
           {
+            "type": "subtraction",
+            "named": true
+          },
+          {
             "type": "sum",
             "named": true
           },
@@ -62,6 +66,10 @@
             "named": true
           },
           {
+            "type": "subtraction",
+            "named": true
+          },
+          {
             "type": "sum",
             "named": true
           },
@@ -91,6 +99,10 @@
         },
         {
           "type": "product",
+          "named": true
+        },
+        {
+          "type": "subtraction",
           "named": true
         },
         {
@@ -133,6 +145,10 @@
             "named": true
           },
           {
+            "type": "subtraction",
+            "named": true
+          },
+          {
             "type": "sum",
             "named": true
           },
@@ -164,6 +180,92 @@
           },
           {
             "type": "product",
+            "named": true
+          },
+          {
+            "type": "subtraction",
+            "named": true
+          },
+          {
+            "type": "sum",
+            "named": true
+          },
+          {
+            "type": "variable",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "subtraction",
+    "named": true,
+    "fields": {
+      "left": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "exponent",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "product",
+            "named": true
+          },
+          {
+            "type": "subtraction",
+            "named": true
+          },
+          {
+            "type": "sum",
+            "named": true
+          },
+          {
+            "type": "variable",
+            "named": true
+          }
+        ]
+      },
+      "right": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "exponent",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "product",
+            "named": true
+          },
+          {
+            "type": "subtraction",
             "named": true
           },
           {
@@ -207,6 +309,10 @@
             "named": true
           },
           {
+            "type": "subtraction",
+            "named": true
+          },
+          {
             "type": "sum",
             "named": true
           },
@@ -241,6 +347,10 @@
             "named": true
           },
           {
+            "type": "subtraction",
+            "named": true
+          },
+          {
             "type": "sum",
             "named": true
           },
@@ -270,6 +380,10 @@
   },
   {
     "type": "+",
+    "named": false
+  },
+  {
+    "type": "-",
     "named": false
   },
   {
