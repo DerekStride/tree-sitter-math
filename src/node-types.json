@@ -1,5 +1,95 @@
 [
   {
+    "type": "division",
+    "named": true,
+    "fields": {
+      "left": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "division",
+            "named": true
+          },
+          {
+            "type": "exponent",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "product",
+            "named": true
+          },
+          {
+            "type": "subtraction",
+            "named": true
+          },
+          {
+            "type": "sum",
+            "named": true
+          },
+          {
+            "type": "variable",
+            "named": true
+          }
+        ]
+      },
+      "right": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "division",
+            "named": true
+          },
+          {
+            "type": "exponent",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "product",
+            "named": true
+          },
+          {
+            "type": "subtraction",
+            "named": true
+          },
+          {
+            "type": "sum",
+            "named": true
+          },
+          {
+            "type": "variable",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "exponent",
     "named": true,
     "fields": {
@@ -14,6 +104,10 @@
           {
             "type": ")",
             "named": false
+          },
+          {
+            "type": "division",
+            "named": true
           },
           {
             "type": "exponent",
@@ -54,6 +148,10 @@
             "named": false
           },
           {
+            "type": "division",
+            "named": true
+          },
+          {
             "type": "exponent",
             "named": true
           },
@@ -89,6 +187,10 @@
       "multiple": false,
       "required": true,
       "types": [
+        {
+          "type": "division",
+          "named": true
+        },
         {
           "type": "exponent",
           "named": true
@@ -133,6 +235,10 @@
             "named": false
           },
           {
+            "type": "division",
+            "named": true
+          },
+          {
             "type": "exponent",
             "named": true
           },
@@ -169,6 +275,10 @@
           {
             "type": ")",
             "named": false
+          },
+          {
+            "type": "division",
+            "named": true
           },
           {
             "type": "exponent",
@@ -215,6 +325,10 @@
             "named": false
           },
           {
+            "type": "division",
+            "named": true
+          },
+          {
             "type": "exponent",
             "named": true
           },
@@ -251,6 +365,10 @@
           {
             "type": ")",
             "named": false
+          },
+          {
+            "type": "division",
+            "named": true
           },
           {
             "type": "exponent",
@@ -297,6 +415,10 @@
             "named": false
           },
           {
+            "type": "division",
+            "named": true
+          },
+          {
             "type": "exponent",
             "named": true
           },
@@ -333,6 +455,10 @@
           {
             "type": ")",
             "named": false
+          },
+          {
+            "type": "division",
+            "named": true
           },
           {
             "type": "exponent",
@@ -384,6 +510,10 @@
   },
   {
     "type": "-",
+    "named": false
+  },
+  {
+    "type": "/",
     "named": false
   },
   {

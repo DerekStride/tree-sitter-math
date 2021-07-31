@@ -17,6 +17,7 @@ module.exports = grammar({
       $.sum,
       $.subtraction,
       $.product,
+      $.division,
       $.exponent,
       $._parenthesized_expression,
     ),
@@ -44,6 +45,15 @@ module.exports = grammar({
       seq(
         field("left", $._expression),
         "*",
+        field("right", $._expression),
+      ),
+    ),
+
+    division: $ => prec.left(
+      "multiplication",
+      seq(
+        field("left", $._expression),
+        "/",
         field("right", $._expression),
       ),
     ),
