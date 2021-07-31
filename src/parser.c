@@ -6,49 +6,55 @@
 #endif
 
 #define LANGUAGE_VERSION 13
-#define STATE_COUNT 8
-#define LARGE_STATE_COUNT 4
-#define SYMBOL_COUNT 9
+#define STATE_COUNT 10
+#define LARGE_STATE_COUNT 5
+#define SYMBOL_COUNT 11
 #define ALIAS_COUNT 0
-#define TOKEN_COUNT 5
+#define TOKEN_COUNT 6
 #define EXTERNAL_TOKEN_COUNT 0
-#define FIELD_COUNT 2
+#define FIELD_COUNT 4
 #define MAX_ALIAS_SEQUENCE_LENGTH 3
-#define PRODUCTION_ID_COUNT 2
+#define PRODUCTION_ID_COUNT 3
 
 enum {
   anon_sym_PLUS = 1,
   anon_sym_STAR = 2,
-  sym_number = 3,
-  sym_variable = 4,
-  sym_expression = 5,
-  sym__expression = 6,
-  sym_sum = 7,
-  sym_product = 8,
+  anon_sym_STAR_STAR = 3,
+  sym_number = 4,
+  sym_variable = 5,
+  sym_expression = 6,
+  sym__expression = 7,
+  sym_sum = 8,
+  sym_product = 9,
+  sym_exponent = 10,
 };
 
 static const char * const ts_symbol_names[] = {
   [ts_builtin_sym_end] = "end",
   [anon_sym_PLUS] = "+",
   [anon_sym_STAR] = "*",
+  [anon_sym_STAR_STAR] = "**",
   [sym_number] = "number",
   [sym_variable] = "variable",
   [sym_expression] = "expression",
   [sym__expression] = "_expression",
   [sym_sum] = "sum",
   [sym_product] = "product",
+  [sym_exponent] = "exponent",
 };
 
 static const TSSymbol ts_symbol_map[] = {
   [ts_builtin_sym_end] = ts_builtin_sym_end,
   [anon_sym_PLUS] = anon_sym_PLUS,
   [anon_sym_STAR] = anon_sym_STAR,
+  [anon_sym_STAR_STAR] = anon_sym_STAR_STAR,
   [sym_number] = sym_number,
   [sym_variable] = sym_variable,
   [sym_expression] = sym_expression,
   [sym__expression] = sym__expression,
   [sym_sum] = sym_sum,
   [sym_product] = sym_product,
+  [sym_exponent] = sym_exponent,
 };
 
 static const TSSymbolMetadata ts_symbol_metadata[] = {
@@ -61,6 +67,10 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .named = false,
   },
   [anon_sym_STAR] = {
+    .visible = true,
+    .named = false,
+  },
+  [anon_sym_STAR_STAR] = {
     .visible = true,
     .named = false,
   },
@@ -88,27 +98,39 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = true,
     .named = true,
   },
+  [sym_exponent] = {
+    .visible = true,
+    .named = true,
+  },
 };
 
 enum {
-  field_left = 1,
-  field_right = 2,
+  field_base = 1,
+  field_exponent = 2,
+  field_left = 3,
+  field_right = 4,
 };
 
 static const char * const ts_field_names[] = {
   [0] = NULL,
+  [field_base] = "base",
+  [field_exponent] = "exponent",
   [field_left] = "left",
   [field_right] = "right",
 };
 
 static const TSFieldMapSlice ts_field_map_slices[PRODUCTION_ID_COUNT] = {
   [1] = {.index = 0, .length = 2},
+  [2] = {.index = 2, .length = 2},
 };
 
 static const TSFieldMapEntry ts_field_map_entries[] = {
   [0] =
     {field_left, 0},
     {field_right, 2},
+  [2] =
+    {field_base, 0},
+    {field_exponent, 2},
 };
 
 static const TSSymbol ts_alias_sequences[PRODUCTION_ID_COUNT][MAX_ALIAS_SEQUENCE_LENGTH] = {
@@ -131,13 +153,13 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
           lookahead == '\n' ||
           lookahead == '\r' ||
           lookahead == ' ') SKIP(0)
-      if (('0' <= lookahead && lookahead <= '9')) ADVANCE(5);
+      if (('0' <= lookahead && lookahead <= '9')) ADVANCE(6);
       if (lookahead == '$' ||
           ('A' <= lookahead && lookahead <= 'Z') ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(7);
+          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(8);
       END_STATE();
     case 1:
-      if (('0' <= lookahead && lookahead <= '9')) ADVANCE(6);
+      if (('0' <= lookahead && lookahead <= '9')) ADVANCE(7);
       END_STATE();
     case 2:
       ACCEPT_TOKEN(ts_builtin_sym_end);
@@ -147,22 +169,26 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       END_STATE();
     case 4:
       ACCEPT_TOKEN(anon_sym_STAR);
+      if (lookahead == '*') ADVANCE(5);
       END_STATE();
     case 5:
-      ACCEPT_TOKEN(sym_number);
-      if (lookahead == '.') ADVANCE(1);
-      if (('0' <= lookahead && lookahead <= '9')) ADVANCE(5);
+      ACCEPT_TOKEN(anon_sym_STAR_STAR);
       END_STATE();
     case 6:
       ACCEPT_TOKEN(sym_number);
+      if (lookahead == '.') ADVANCE(1);
       if (('0' <= lookahead && lookahead <= '9')) ADVANCE(6);
       END_STATE();
     case 7:
+      ACCEPT_TOKEN(sym_number);
+      if (('0' <= lookahead && lookahead <= '9')) ADVANCE(7);
+      END_STATE();
+    case 8:
       ACCEPT_TOKEN(sym_variable);
       if (('0' <= lookahead && lookahead <= '9') ||
           ('A' <= lookahead && lookahead <= 'Z') ||
           lookahead == '_' ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(7);
+          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(8);
       END_STATE();
     default:
       return false;
@@ -178,6 +204,8 @@ static const TSLexMode ts_lex_modes[STATE_COUNT] = {
   [5] = {.lex_state = 0},
   [6] = {.lex_state = 0},
   [7] = {.lex_state = 0},
+  [8] = {.lex_state = 0},
+  [9] = {.lex_state = 0},
 };
 
 static const uint16_t ts_parse_table[LARGE_STATE_COUNT][SYMBOL_COUNT] = {
@@ -185,76 +213,108 @@ static const uint16_t ts_parse_table[LARGE_STATE_COUNT][SYMBOL_COUNT] = {
     [ts_builtin_sym_end] = ACTIONS(1),
     [anon_sym_PLUS] = ACTIONS(1),
     [anon_sym_STAR] = ACTIONS(1),
+    [anon_sym_STAR_STAR] = ACTIONS(1),
     [sym_number] = ACTIONS(1),
     [sym_variable] = ACTIONS(1),
   },
   [1] = {
-    [sym_expression] = STATE(7),
-    [sym__expression] = STATE(4),
-    [sym_sum] = STATE(4),
-    [sym_product] = STATE(4),
+    [sym_expression] = STATE(9),
+    [sym__expression] = STATE(5),
+    [sym_sum] = STATE(5),
+    [sym_product] = STATE(5),
+    [sym_exponent] = STATE(5),
     [sym_number] = ACTIONS(3),
     [sym_variable] = ACTIONS(3),
   },
   [2] = {
-    [sym__expression] = STATE(5),
-    [sym_sum] = STATE(5),
-    [sym_product] = STATE(5),
+    [sym__expression] = STATE(6),
+    [sym_sum] = STATE(6),
+    [sym_product] = STATE(6),
+    [sym_exponent] = STATE(6),
     [sym_number] = ACTIONS(5),
     [sym_variable] = ACTIONS(5),
   },
   [3] = {
-    [sym__expression] = STATE(6),
-    [sym_sum] = STATE(6),
-    [sym_product] = STATE(6),
+    [sym__expression] = STATE(7),
+    [sym_sum] = STATE(7),
+    [sym_product] = STATE(7),
+    [sym_exponent] = STATE(7),
     [sym_number] = ACTIONS(7),
     [sym_variable] = ACTIONS(7),
+  },
+  [4] = {
+    [sym__expression] = STATE(8),
+    [sym_sum] = STATE(8),
+    [sym_product] = STATE(8),
+    [sym_exponent] = STATE(8),
+    [sym_number] = ACTIONS(9),
+    [sym_variable] = ACTIONS(9),
   },
 };
 
 static const uint16_t ts_small_parse_table[] = {
-  [0] = 3,
-    ACTIONS(9), 1,
-      ts_builtin_sym_end,
+  [0] = 4,
     ACTIONS(11), 1,
+      ts_builtin_sym_end,
+    ACTIONS(13), 1,
       anon_sym_PLUS,
-    ACTIONS(13), 1,
+    ACTIONS(15), 1,
       anon_sym_STAR,
-  [10] = 2,
-    ACTIONS(13), 1,
+    ACTIONS(17), 1,
+      anon_sym_STAR_STAR,
+  [13] = 3,
+    ACTIONS(15), 1,
       anon_sym_STAR,
-    ACTIONS(15), 2,
+    ACTIONS(17), 1,
+      anon_sym_STAR_STAR,
+    ACTIONS(19), 2,
       ts_builtin_sym_end,
       anon_sym_PLUS,
-  [18] = 1,
-    ACTIONS(17), 3,
+  [24] = 3,
+    ACTIONS(17), 1,
+      anon_sym_STAR_STAR,
+    ACTIONS(23), 1,
+      anon_sym_STAR,
+    ACTIONS(21), 2,
       ts_builtin_sym_end,
       anon_sym_PLUS,
+  [35] = 2,
+    ACTIONS(27), 1,
       anon_sym_STAR,
-  [24] = 1,
-    ACTIONS(19), 1,
+    ACTIONS(25), 3,
+      ts_builtin_sym_end,
+      anon_sym_PLUS,
+      anon_sym_STAR_STAR,
+  [44] = 1,
+    ACTIONS(29), 1,
       ts_builtin_sym_end,
 };
 
 static const uint32_t ts_small_parse_table_map[] = {
-  [SMALL_STATE(4)] = 0,
-  [SMALL_STATE(5)] = 10,
-  [SMALL_STATE(6)] = 18,
+  [SMALL_STATE(5)] = 0,
+  [SMALL_STATE(6)] = 13,
   [SMALL_STATE(7)] = 24,
+  [SMALL_STATE(8)] = 35,
+  [SMALL_STATE(9)] = 44,
 };
 
 static const TSParseActionEntry ts_parse_actions[] = {
   [0] = {.entry = {.count = 0, .reusable = false}},
   [1] = {.entry = {.count = 1, .reusable = false}}, RECOVER(),
-  [3] = {.entry = {.count = 1, .reusable = true}}, SHIFT(4),
-  [5] = {.entry = {.count = 1, .reusable = true}}, SHIFT(5),
-  [7] = {.entry = {.count = 1, .reusable = true}}, SHIFT(6),
-  [9] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_expression, 1),
-  [11] = {.entry = {.count = 1, .reusable = true}}, SHIFT(2),
-  [13] = {.entry = {.count = 1, .reusable = true}}, SHIFT(3),
-  [15] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_sum, 3, .production_id = 1),
-  [17] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_product, 3, .production_id = 1),
-  [19] = {.entry = {.count = 1, .reusable = true}},  ACCEPT_INPUT(),
+  [3] = {.entry = {.count = 1, .reusable = true}}, SHIFT(5),
+  [5] = {.entry = {.count = 1, .reusable = true}}, SHIFT(6),
+  [7] = {.entry = {.count = 1, .reusable = true}}, SHIFT(7),
+  [9] = {.entry = {.count = 1, .reusable = true}}, SHIFT(8),
+  [11] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_expression, 1),
+  [13] = {.entry = {.count = 1, .reusable = true}}, SHIFT(2),
+  [15] = {.entry = {.count = 1, .reusable = false}}, SHIFT(3),
+  [17] = {.entry = {.count = 1, .reusable = true}}, SHIFT(4),
+  [19] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_sum, 3, .production_id = 1),
+  [21] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_product, 3, .production_id = 1),
+  [23] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_product, 3, .production_id = 1),
+  [25] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_exponent, 3, .production_id = 2),
+  [27] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_exponent, 3, .production_id = 2),
+  [29] = {.entry = {.count = 1, .reusable = true}},  ACCEPT_INPUT(),
 };
 
 #ifdef __cplusplus

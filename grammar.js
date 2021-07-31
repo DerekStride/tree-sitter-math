@@ -3,6 +3,7 @@ module.exports = grammar({
 
   precedences: _ => [
     [
+      "exponent",
       "multiplication",
       "addition",
     ],
@@ -15,6 +16,7 @@ module.exports = grammar({
       $.number,
       $.sum,
       $.product,
+      $.exponent,
     ),
 
     sum: $ => prec.left(
@@ -32,6 +34,15 @@ module.exports = grammar({
         field("left", $._expression),
         "*",
         field("right", $._expression),
+      ),
+    ),
+
+    exponent: $ => prec.left(
+      "exponent",
+      seq(
+        field("base", $._expression),
+        "**",
+        field("exponent", $._expression),
       ),
     ),
 

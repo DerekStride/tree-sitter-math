@@ -23,6 +23,10 @@
         {
           "type": "SYMBOL",
           "name": "product"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "exponent"
         }
       ]
     },
@@ -84,6 +88,35 @@
         ]
       }
     },
+    "exponent": {
+      "type": "PREC_LEFT",
+      "value": "exponent",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "base",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expression"
+            }
+          },
+          {
+            "type": "STRING",
+            "value": "**"
+          },
+          {
+            "type": "FIELD",
+            "name": "exponent",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expression"
+            }
+          }
+        ]
+      }
+    },
     "number": {
       "type": "PATTERN",
       "value": "\\d+(\\.\\d+)?"
@@ -102,6 +135,10 @@
   "conflicts": [],
   "precedences": [
     [
+      {
+        "type": "STRING",
+        "value": "exponent"
+      },
       {
         "type": "STRING",
         "value": "multiplication"
