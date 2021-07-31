@@ -1,6 +1,13 @@
 module.exports = grammar({
   name: 'math',
 
+  precedences: _ => [
+    [
+      "multiplication",
+      "addition",
+    ],
+  ],
+
   rules: {
     expression: $ => $._expression,
     _expression: $ => choice(
@@ -11,6 +18,7 @@ module.exports = grammar({
     ),
 
     sum: $ => prec.left(
+      "addition",
       seq(
         field("left", $._expression),
         "+",
@@ -19,6 +27,7 @@ module.exports = grammar({
     ),
 
     product: $ => prec.left(
+      "multiplication",
       seq(
         field("left", $._expression),
         "*",

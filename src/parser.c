@@ -220,17 +220,18 @@ static const uint16_t ts_small_parse_table[] = {
       anon_sym_PLUS,
     ACTIONS(13), 1,
       anon_sym_STAR,
-  [10] = 1,
-    ACTIONS(15), 3,
+  [10] = 2,
+    ACTIONS(13), 1,
+      anon_sym_STAR,
+    ACTIONS(15), 2,
       ts_builtin_sym_end,
       anon_sym_PLUS,
-      anon_sym_STAR,
-  [16] = 1,
+  [18] = 1,
     ACTIONS(17), 3,
       ts_builtin_sym_end,
       anon_sym_PLUS,
       anon_sym_STAR,
-  [22] = 1,
+  [24] = 1,
     ACTIONS(19), 1,
       ts_builtin_sym_end,
 };
@@ -238,8 +239,8 @@ static const uint16_t ts_small_parse_table[] = {
 static const uint32_t ts_small_parse_table_map[] = {
   [SMALL_STATE(4)] = 0,
   [SMALL_STATE(5)] = 10,
-  [SMALL_STATE(6)] = 16,
-  [SMALL_STATE(7)] = 22,
+  [SMALL_STATE(6)] = 18,
+  [SMALL_STATE(7)] = 24,
 };
 
 static const TSParseActionEntry ts_parse_actions[] = {

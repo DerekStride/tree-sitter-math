@@ -28,7 +28,7 @@
     },
     "sum": {
       "type": "PREC_LEFT",
-      "value": 0,
+      "value": "addition",
       "content": {
         "type": "SEQ",
         "members": [
@@ -57,7 +57,7 @@
     },
     "product": {
       "type": "PREC_LEFT",
-      "value": 0,
+      "value": "multiplication",
       "content": {
         "type": "SEQ",
         "members": [
@@ -100,7 +100,18 @@
     }
   ],
   "conflicts": [],
-  "precedences": [],
+  "precedences": [
+    [
+      {
+        "type": "STRING",
+        "value": "multiplication"
+      },
+      {
+        "type": "STRING",
+        "value": "addition"
+      }
+    ]
+  ],
   "externals": [],
   "inline": [],
   "supertypes": []
