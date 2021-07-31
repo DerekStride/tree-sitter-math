@@ -19,6 +19,10 @@
         {
           "type": "SYMBOL",
           "name": "sum"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "product"
         }
       ]
     },
@@ -39,6 +43,35 @@
           {
             "type": "STRING",
             "value": "+"
+          },
+          {
+            "type": "FIELD",
+            "name": "right",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expression"
+            }
+          }
+        ]
+      }
+    },
+    "product": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "left",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expression"
+            }
+          },
+          {
+            "type": "STRING",
+            "value": "*"
           },
           {
             "type": "FIELD",

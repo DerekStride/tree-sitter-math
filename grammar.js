@@ -7,12 +7,21 @@ module.exports = grammar({
       $.variable,
       $.number,
       $.sum,
+      $.product,
     ),
 
     sum: $ => prec.left(
       seq(
         field("left", $._expression),
         "+",
+        field("right", $._expression),
+      ),
+    ),
+
+    product: $ => prec.left(
+      seq(
+        field("left", $._expression),
+        "*",
         field("right", $._expression),
       ),
     ),
