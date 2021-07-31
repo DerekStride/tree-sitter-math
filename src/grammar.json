@@ -27,6 +27,10 @@
         {
           "type": "SYMBOL",
           "name": "exponent"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_parenthesized_expression"
         }
       ]
     },
@@ -116,6 +120,23 @@
           }
         ]
       }
+    },
+    "_parenthesized_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_expression"
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
     },
     "number": {
       "type": "PATTERN",

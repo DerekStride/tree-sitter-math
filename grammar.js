@@ -17,6 +17,7 @@ module.exports = grammar({
       $.sum,
       $.product,
       $.exponent,
+      $._parenthesized_expression,
     ),
 
     sum: $ => prec.left(
@@ -44,6 +45,12 @@ module.exports = grammar({
         "**",
         field("exponent", $._expression),
       ),
+    ),
+
+    _parenthesized_expression: $ => seq(
+      "(",
+      $._expression,
+      ")",
     ),
 
     number: _ => /\d+(\.\d+)?/,
